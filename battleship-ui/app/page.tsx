@@ -7,7 +7,7 @@ import { initializeGrid, fireShot, checkWin, nextTurn } from '../app/utils/api';
 
 export default function Home() {
   const [playerName] = useState('Player 1');
-  const [grid] = useState({ size: 10, cells: Array(10).fill(Array(10).fill('-')) });
+  const [grid] = useState({ size: 10, cells: Array(10).fill(Array(10).fill('-')), ships: [] });
   const [message, setMessage] = useState('');
 
   const handleInitializeGrid = async (shipData: { name: string; coordinates: [number, number][] }) => {
@@ -27,8 +27,8 @@ export default function Home() {
   };
 
  return (
-    <div>
-      <h1>Battleship Game</h1>
+    <div >
+      <h1 className="text-left text-3xl font-bold mb-4">Battleship Game</h1>
       <Grid gridData={grid} />
       <ShipForm onSubmit={handleInitializeGrid} />
       <FireShotForm onSubmit={handleFireShot} />
