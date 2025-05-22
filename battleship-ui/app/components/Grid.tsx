@@ -5,22 +5,35 @@ type GridProps = {
 };
 
 const Grid: FC<GridProps> = ({ gridData }) => {
-  const getIcon = (cell: string): JSX.Element | null => {
-    switch (cell) {
-      case 'H':
-        return <span className="text-green-500">💥</span>; // Hit
-      case 'M':
-        return <span className="text-red-500">💧</span>; // Miss
-      case 'S':
-        return <span className="text-blue-500">🚢</span>; // Ship
-      case 'X':
-        return <span className="text-gray-500">🏴‍☠️</span>; // Sunk
-      case 'B':
-        return <span className="text-yellow-500">🛡️</span>; // Battleship
-      default:
-        return null; // Empty cell
+  // Function to get the icon based on the cell value
+   // Function to get the icon based on the cell value
+  const getIcon = (rowIndex: number, colIndex: number): JSX.Element | null => {
+    const cellShipdata = gridData.ships.find(ship => ship.coordinates.some(([x, y]) => x === rowIndex && y === colIndex));
+
+    if (cellShipdata?.type === 'ship') {
+      return <span className="text-yellow-500">🚢</span>; // Ship
+    }else if(cellShipdata?.type === 'battleship'){
+      return <span className="text-blue-500">🛡️</span>; // Battleship{
     }
+    return null; // Empty cell
   };
+
+  // const getIcon = (cell: string): JSX.Element | null => {
+  //   switch (cell) {
+  //     case 'H':
+  //       return <span className="text-green-500">💥</span>; // Hit
+  //     case 'M':
+  //       return <span className="text-red-500">💧</span>; // Miss
+  //     case 'S':
+  //       return <span className="text-blue-500">🚢</span>; // Ship
+  //     case 'X':
+  //       return <span className="text-gray-500">🏴‍☠️</span>; // Sunk
+  //     case 'B':
+  //       return <span className="text-yellow-500">🛡️</span>; // Battleship
+  //     default:
+  //       return null; // Empty cell
+  //   }
+  // };
   return (
     <div className="grid gap-1 border p-4 rounded-md bg-gray-100" 
       style={{ gridTemplateColumns: `repeat(${gridData.size}, 40px)` }}>
@@ -33,7 +46,8 @@ const Grid: FC<GridProps> = ({ gridData }) => {
             }`}
             style={{ width: 40, height: 40 }}
           >
-            {getIcon(cell)}
+            {getIcon(rowIndex, colIndex)}
+            {/* {getIcon(cell)} */}
           </div>
         ))
       )}
